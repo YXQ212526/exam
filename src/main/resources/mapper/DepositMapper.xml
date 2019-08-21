@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yuanxueqi.exam.dao.DepositMapper">
+  <resultMap id="deposit" type="com.yuanxueqi.exam.data.Deposit">
+    <result column="id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="currency_name" property="currencyName"/>
+    <result column="txhash" property="txHash"/>
+    <result column="address" property="address"/>
+    <result column="amount" property="amount"/>
+    <result column="height" property="height"/>
+    <result column="confirm" property="confirm"/>
+    <result column="state" property="state"/>
+    <result column="version" property="version"/>
+  </resultMap>
+
+
+  <insert id="insert" parameterType="com.yuanxueqi.exam.data.Deposit" useGeneratedKeys="true"
+    keyColumn="id">
+    insert into deposit(
+    user_id,currency_name,txhash,address,amount,height,confirm,state,version)
+    values
+    (#{userId},#{currencyName},#{txHash},#{address},#{amount},#{height},#{confirm},#{state},#{version})
+  </insert>
+
+  <select id="selectById" resultMap="deposit">
+    select id,user_id,currency_name,txhash,address,amount,height,confirm,state,version from deposit where user_id=#{userId}
+  </select>
+
+  <select id="selectByIndex" resultMap="deposit">
+    select id,user_id,currency_name,txhash,address,amount,height,confirm,state,version from deposit
+    where currency_name=#{currencyName} and txhash=#{txHash}
+  </select>
+  <update id="update" parameterType="com.yuanxueqi.exam.data.Deposit">
+    update deposit set confirm=#{confirm} ,state=#{state},version=version+1
+    where currency_name=#{currencyName} and txhash=#{txHash} and version=#{version}
+  </update>
+</mapper>

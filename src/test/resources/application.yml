@@ -1,0 +1,24 @@
+#配置数据库连接地址
+spring.datasource.url: jdbc:h2:mem:exam;MODE=MySQL;DATABASE_TO_UPPER=false;INIT=CREATE SCHEMA IF NOT EXISTS exam;
+
+#配置数据库驱动
+spring.datasource.driver-class-name: org.h2.Driver
+#配置数据库用户名
+spring.datasource.username: root
+#配置数据库密码
+spring.datasource.password: Yxq12345!
+#配置能远程访问
+spring.h2.console.settings.web-allow-others: true
+#配置访问地址
+spring.h2.console.path: /h2-console
+#配置项目启动 h2就启动
+spring.h2.console.enabled: true
+# 使用H2数据库
+spring.datasource.platform: h2
+
+
+spring.datasource.schema: classpath:create_table.sql
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
