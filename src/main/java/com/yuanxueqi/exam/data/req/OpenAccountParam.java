@@ -1,4 +1,4 @@
-package com.yuanxueqi.exam.data;
+package com.yuanxueqi.exam.data.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UserAddress {
+public class OpenAccountParam {
 
   Long userId;
-  String address;
-  int state;
+  String currencyName;
 }

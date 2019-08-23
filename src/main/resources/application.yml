@@ -4,5 +4,13 @@ spring:
     url: jdbc:mysql://localhost:3306/exam
     username: root
     password: Yxq12345!
+  redis:
+    database: 0
+    host: localhost
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+    port: 6379
 mybatis:
   mapper-locations: classpath:mapper/*.xml

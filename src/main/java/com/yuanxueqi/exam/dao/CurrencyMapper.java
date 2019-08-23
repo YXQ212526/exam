@@ -1,8 +1,7 @@
 package com.yuanxueqi.exam.dao;
 
-import java.util.List;
-
 import com.yuanxueqi.exam.data.Currency;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

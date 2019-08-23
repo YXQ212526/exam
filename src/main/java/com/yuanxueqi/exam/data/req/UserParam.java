@@ -1,17 +1,17 @@
-package com.yuanxueqi.exam.data;
+package com.yuanxueqi.exam.data.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class UserAddress {
+@NoArgsConstructor
+public class UserParam {
 
-  Long userId;
-  String address;
-  int state;
+  String name;
+  String phone;
 }

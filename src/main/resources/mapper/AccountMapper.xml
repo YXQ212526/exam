@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yuanxueqi.exam.dao.AccountMapper">
+  <resultMap id="account" type="com.yuanxueqi.exam.data.Account">
+    <result column="id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="state" property="state"/>
+    <result column="address" property="address"/>
+    <result column="currency_name" property="currencyName"/>
+    <result column="balance" property="balance"/>
+  </resultMap>
+  <select id="select" resultMap="account">
+  select * from account where user_id=#{userId} and currency_name=#{currencyName}
+  </select>
+
+  <select id="selectAll" resultMap="account">
+  select * from account where user_id=#{userId}
+  </select>
+<update id="update" parameterType="com.yuanxueqi.exam.data.UpdateBalance">
+  update account set balance =#{amount} + balance where user_id=#{userId} and currency_name=#{currencyName}
+</update>
+  <insert id="insert" parameterType="com.yuanxueqi.exam.data.Account">
+    insert into account(user_id,address,state,currency_name,balance) values(#{userId},#{address},#{state},#{currencyName},#{balance})
+  </insert>
+</mapper>

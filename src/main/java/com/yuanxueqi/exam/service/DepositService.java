@@ -1,17 +1,20 @@
 package com.yuanxueqi.exam.service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.yuanxueqi.exam.dao.AccountMapper;
 import com.yuanxueqi.exam.dao.CurrencyMapper;
 import com.yuanxueqi.exam.dao.DepositMapper;
-import com.yuanxueqi.exam.data.Currency;
+import com.yuanxueqi.exam.dao.UserAddressMapper;
+import com.yuanxueqi.exam.dao.UserMapper;
 import com.yuanxueqi.exam.data.Deposit;
+import com.yuanxueqi.exam.data.UpdateBalance;
+import com.yuanxueqi.exam.data.UserAddress;
 import com.yuanxueqi.exam.data.rep.DepositEntity;
+import com.yuanxueqi.exam.data.rep.enums.RespDescEnum;
 import com.yuanxueqi.exam.data.req.DepositParam;
 import com.yuanxueqi.exam.enums.DepositStateEnum;
-import com.yuanxueqi.exam.error.ProjectError;
+import com.yuanxueqi.exam.rest.MyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -25,12 +28,28 @@ public class DepositService {
   @Autowired
   CurrencyMapper currencyMapper;
 
-  public String createDepositOrder(DepositParam param) {
+  @Autowired
+  UserAddressMapper userAddressMapper;
+
+  @Autowired
+  UserMapper userMapper;
+  @Autowired
+  AccountMapper accountMapper;
+
+  public MyResponse createDepositOrder(DepositParam param) {
     if (param == null) {
-      return "传入参数为空";
+      return new MyResponse(RespDescEnum.PARAM_NULL);
     }
-    if (!currencyMapper.select().stream().map(Currency::getName).collect(Collectors.toList()).contains(param.getCurrencyName())) {
-      return "不支持该币种";
+    if (accountMapper.select(param.getUserId(), param.getCurrencyName()) == null) {
+      return new MyResponse(RespDescEnum.NO_ACCOUNT);
+    }
+
+    if (!accountMapper.select(param.getUserId(), param.getCurrencyName()).getAddress().equals(param.getAddress())) {
+      return new MyResponse(RespDescEnum.ADDRESS_ERROR);
+    }
+    if (!userAddressMapper.select(param.getUserId()).stream().map(UserAddress::getAddress).collect(Collectors.toList())
+        .contains(param.getAddress())) {
+      return new MyResponse(RespDescEnum.NOT_BIND_ADDRESS);
     }
 
     Deposit deposit = Deposit.builder()
@@ -49,21 +68,28 @@ public class DepositService {
       depositMapper.insert(deposit);
     } catch (DuplicateKeyException e) {
     }
-    return "成功";
+    return new MyResponse(RespDescEnum.SUCCESS);
   }
 
-  public List<DepositEntity> getDepositRecord(Long userId) {
-    return DepositEntity.ToEntityList(depositMapper.selectById(userId));
+  public MyResponse getDepositRecord(Long userId) {
+    return new MyResponse(DepositEntity.ToEntityList(depositMapper.selectById(userId)));
 
   }
 
-  public String updateConfirm(DepositParam param) {
+  public MyResponse updateConfirm(DepositParam param) {
     if (param == null) {
-      return "传入参数为空";
+      return new MyResponse(RespDescEnum.PARAM_NULL);
     }
     Deposit deposit = depositMapper.selectByIndex(param.getCurrencyName(), param.getTxHash());
-    if (null == deposit) {
-      return "没有该充值记录";
+
+    if (null == deposit
+        || !param.getUserId().equals(deposit.getUserId())
+        || !param.getAddress().equals(deposit.getAddress())
+        || param.getAmount().compareTo(deposit.getAmount()) != 0
+        || !param.getHeight().equals(deposit.getHeight())
+
+    ) {
+      return new MyResponse(RespDescEnum.NO_DEPOSIT);
     }
     if (param.getConfirm() >= 0 && param.getConfirm() <= 6) {
       if (param.getConfirm() == 6) {
@@ -74,11 +100,19 @@ public class DepositService {
         deposit.setState(DepositStateEnum.WAITING.getCode());
       }
     } else {
-      return "确认次数不正确";
+      return new MyResponse(RespDescEnum.CONFIRM_ERROR);
     }
     deposit.setConfirm(param.getConfirm());
     depositMapper.update(deposit);
-    return "成功";
+    if(param.getConfirm()==6)
+    {
+      accountMapper.update(UpdateBalance.builder()
+      .amount(param.getAmount())
+      .currencyName(param.getCurrencyName())
+      .userId(param.getUserId())
+      .build());
+    }
+    return new MyResponse(RespDescEnum.SUCCESS);
   }
 
 

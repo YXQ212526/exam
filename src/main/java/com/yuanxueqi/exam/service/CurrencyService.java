@@ -1,12 +1,12 @@
 package com.yuanxueqi.exam.service;
 
-import java.util.List;
-
 import com.yuanxueqi.exam.dao.CurrencyMapper;
 import com.yuanxueqi.exam.data.Currency;
-import com.yuanxueqi.exam.error.ProjectError;
-import org.apache.tomcat.jni.Error;
+import com.yuanxueqi.exam.data.rep.enums.RespDescEnum;
+import com.yuanxueqi.exam.enums.OnOffStateEnum;
+import com.yuanxueqi.exam.rest.MyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +16,27 @@ public class CurrencyService {
   @Autowired
   public CurrencyMapper mapper;
 
-  public List<Currency> displayAllCurrencies() {
+  @Cacheable(value = "currencies")
+  public MyResponse displayAllCurrencies() {
 
-    return mapper.select();
+    return new MyResponse(mapper.select());
   }
 
-  public String insertCurrency(Currency currency) {
+  public MyResponse insertCurrency(Currency currency) {
+
     if (currency == null) {
-      return "传入参数为空";
+      return new MyResponse(RespDescEnum.PARAM_NULL);
+    }
+    if (OnOffStateEnum.get(currency.getState()) == null) {
+      return new MyResponse(RespDescEnum.STATE_ERROR);
+
     }
     try {
       mapper.insert(currency);
     } catch (DuplicateKeyException e) {
 
     }
-    return "成功";
+    return new MyResponse(RespDescEnum.SUCCESS);
+
   }
 }

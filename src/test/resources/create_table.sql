@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS currency;
 create table  `currency`(
 `id` bigint unsigned auto_increment  not null,
 `currency_id` bigint not null ,
@@ -7,6 +8,7 @@ primary key(`id`),
 unique key(`currency_id`)
 );
 
+CREATE SCHEMA IF NOT EXISTS user;
 create table `user`(
 `id` bigint unsigned auto_increment  not null,
 `username` varchar(10) not null ,
@@ -17,7 +19,8 @@ primary key(`id`),
 unique key(`username`)
 );
 
-create table `bind`(
+CREATE SCHEMA IF NOT EXISTS user_address;
+create table `user_address`(
 `id` bigint unsigned auto_increment not null,
 `user_id` bigint unsigned  not null ,
 `address`  varchar(50)  not null,
@@ -25,6 +28,8 @@ create table `bind`(
 primary key(`id`)
 );
 
+
+CREATE SCHEMA IF NOT EXISTS deposit;
 create table `deposit`(
 `id` bigint unsigned auto_increment not null,
 `user_id` bigint unsigned  not null ,
@@ -39,4 +44,16 @@ create table `deposit`(
 `version` bigint(20) unsigned NOT NULL DEFAULT '0',
 primary key(`id`),
 unique key(`currency_name`,`txhash`)
+);
+
+CREATE SCHEMA IF NOT EXISTS account;
+create table account(
+`id` bigint unsigned auto_increment not null,
+`user_id` bigint unsigned  not null ,
+`currency_name` varchar(20) not null,
+`address`  varchar(50)  not null,
+`balance` decimal(36,18) unsigned NOT NULL,
+`state`  tinyint(3) default 0 not null,
+primary key(`id`),
+unique key(`user_id`,`currency_name`)
 );

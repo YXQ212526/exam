@@ -1,9 +1,7 @@
 package com.yuanxueqi.exam.controller;
 
-import java.util.List;
-
-import com.yuanxueqi.exam.data.rep.DepositEntity;
 import com.yuanxueqi.exam.data.req.DepositParam;
+import com.yuanxueqi.exam.rest.MyResponse;
 import com.yuanxueqi.exam.service.DepositService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,19 +24,19 @@ public class DepositController {
 
   @ApiOperation("创建充值订单")
   @PostMapping("/create")
-  public String createDepositOrder(@RequestBody @ApiParam("充值参数") DepositParam param) {
+  public MyResponse createDepositOrder(@RequestBody @ApiParam("充值参数") DepositParam param) {
     return depositService.createDepositOrder(param);
   }
 
-  @ApiOperation("获取提现订单")
+  @ApiOperation("获取充值订单")
   @GetMapping("/get")
-  public List<DepositEntity> getDepositRecord(@RequestParam @ApiParam("用户ID") Long userId) {
+  public MyResponse getDepositRecord(@RequestParam @ApiParam("用户ID") Long userId) {
     return depositService.getDepositRecord(userId);
   }
 
   @ApiOperation("更改确认次数")
   @PostMapping("/confirm")
-  public String updateConfirm(@RequestBody @ApiParam("用户ID") DepositParam param) {
+  public MyResponse updateConfirm(@RequestBody @ApiParam("用户ID") DepositParam param) {
     return depositService.updateConfirm(param);
   }
 }

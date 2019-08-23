@@ -1,6 +1,6 @@
 package com.yuanxueqi.exam.data;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Currency implements Serializable {
+public class UpdateBalance {
 
-  private static final long serialVersionUID = 1L;
-  Long currencyId;
-  int state;
-  String name;
+  BigDecimal amount;
+  Long userId;
+  String currencyName;
 }

@@ -8,7 +8,7 @@
     <result column="id" property="id"/>
     <result column="user_id" property="userId"/>
     <result column="currency_name" property="currencyName"/>
-    <result column="txhash" property="txHash"/>
+    <result column="txhash" jdbcType="BIGINT" property="txHash"/>
     <result column="address" property="address"/>
     <result column="amount" property="amount"/>
     <result column="height" property="height"/>
@@ -32,10 +32,13 @@
 
   <select id="selectByIndex" resultMap="deposit">
     select id,user_id,currency_name,txhash,address,amount,height,confirm,state,version from deposit
-    where currency_name=#{currencyName} and txhash=#{txHash}
+    where currency_name=#{currencyName}
+      and txhash=${txHash}
   </select>
   <update id="update" parameterType="com.yuanxueqi.exam.data.Deposit">
     update deposit set confirm=#{confirm} ,state=#{state},version=version+1
-    where currency_name=#{currencyName} and txhash=#{txHash} and version=#{version}
+    where currency_name=#{currencyName}
+      and txhash=${txHash}
+    and version=#{version}
   </update>
 </mapper>

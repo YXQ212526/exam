@@ -26,8 +26,7 @@ public class DepositEntity {
 
   public static List<DepositEntity> ToEntityList(List<Deposit> deposit) {
     return deposit.stream().map((val) -> {
-
-      return DepositEntity.builder()
+     return DepositEntity.builder()
           .id(val.getId())
           .userId(val.getUserId())
           .currencyName(val.getCurrencyName())

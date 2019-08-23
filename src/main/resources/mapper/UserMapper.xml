@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yuanxueqi.exam.dao.UserMapper">
+  <resultMap id="user" type="com.yuanxueqi.exam.data.User">
+    <result column="id" property="id"/>
+    <result column="username" property="name"/>
+    <result column="state" property="state"/>
+    <result column="phone" property="phone"/>
+    <result column="create_at" property="createAt"/>
+  </resultMap>
+
+  <select id="selectById" resultMap="user">
+    select * from user where id=#{id}
+  </select>
+
+  <select id="selectByName" resultMap="user">
+    select * from user where username=#{name}
+  </select>
+
+  <insert id="insert" parameterType="com.yuanxueqi.exam.data.User">
+    insert into user(username,phone,state,create_at) values(#{name},#{phone},#{state},#{createAt})
+  </insert>
+</mapper>
