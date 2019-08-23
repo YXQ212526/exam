@@ -1,7 +1,6 @@
 package com.yuanxueqi.exam.controller;
 
 import com.yuanxueqi.exam.data.req.UserParam;
-import com.yuanxueqi.exam.service.CurrencyService;
 import com.yuanxueqi.exam.service.UserService;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;

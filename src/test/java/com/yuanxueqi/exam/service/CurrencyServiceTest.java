@@ -24,7 +24,7 @@ public class CurrencyServiceTest {
 
   @Test
   public void b_displayAllCurrencies() {
-    List<Currency> currencies=(List<Currency>)currencyService.displayAllCurrencies().getData();
+    List<Currency> currencies = (List<Currency>) currencyService.displayAllCurrencies().getData();
     Assert.assertSame(1, currencies.size());
     Assert.assertSame(100L, currencies.get(0).getCurrencyId());
     Assert.assertEquals("btc", currencies.get(0).getName());
@@ -33,13 +33,13 @@ public class CurrencyServiceTest {
 
   @Test
   public void a_insertCurrency() {
-    RespDescEnum respDescEnum=(RespDescEnum)currencyService.insertCurrency(
+    RespDescEnum respDescEnum = (RespDescEnum) currencyService.insertCurrency(
         Currency.builder()
             .currencyId(100L)
             .name("btc")
             .state(OnOffStateEnum.ON.getCode())
             .build()).getData();
-    Assert.assertEquals(RespDescEnum.SUCCESS,respDescEnum);
+    Assert.assertEquals(RespDescEnum.SUCCESS, respDescEnum);
   }
 
 }

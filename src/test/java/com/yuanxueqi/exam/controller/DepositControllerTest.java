@@ -1,13 +1,9 @@
 package com.yuanxueqi.exam.controller;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-
-import com.yuanxueqi.exam.dao.AccountMapper;
 import com.yuanxueqi.exam.data.Account;
 import com.yuanxueqi.exam.data.Currency;
-import com.yuanxueqi.exam.data.UserAddress;
 import com.yuanxueqi.exam.data.req.DepositParam;
 import com.yuanxueqi.exam.data.req.OpenAccountParam;
 import com.yuanxueqi.exam.data.req.UserAddressParam;
@@ -66,8 +62,8 @@ public class DepositControllerTest {
         builder()
         .currencyName("btc")
         .userId(1L)
-       . build());
-    Account account=(Account)accountService.getAccount(1L,"btc").getData();
+        .build());
+    Account account = (Account) accountService.getAccount(1L, "btc").getData();
 
     userAddressService.insertUserAddress(
         UserAddressParam.builder()

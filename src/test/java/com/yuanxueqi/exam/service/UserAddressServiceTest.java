@@ -33,9 +33,10 @@ public class UserAddressServiceTest {
 
   @Autowired
   CurrencyService currencyService;
+
   @Test
   public void b_getAddress() {
-    Account account=(Account)accountService.getAccount(1L,"btc").getData();
+    Account account = (Account) accountService.getAccount(1L, "btc").getData();
     List<UserAddress> userAddresses = (List<UserAddress>) service.getAddress(1L).getData();
     Assert.assertTrue(userAddresses.size() > 0);
     Assert.assertEquals(account.getAddress(), userAddresses.get(0).getAddress());
@@ -49,18 +50,18 @@ public class UserAddressServiceTest {
             .name("btc")
             .state(OnOffStateEnum.ON.getCode())
             .build()
-        );
+    );
     userService.insert(UserParam.builder()
         .name("a")
         .phone("2")
         .build());
     accountService.openAccount(OpenAccountParam
-    .builder()
-    .currencyName("btc")
-    .userId(1L)
-    .build()).getData();
-    Account account=(Account)accountService.getAccount(1L,"btc").getData();
-        RespDescEnum respDescEnum = (RespDescEnum) service.insertUserAddress(
+        .builder()
+        .currencyName("btc")
+        .userId(1L)
+        .build()).getData();
+    Account account = (Account) accountService.getAccount(1L, "btc").getData();
+    RespDescEnum respDescEnum = (RespDescEnum) service.insertUserAddress(
         UserAddressParam.builder()
             .address(account.getAddress())
             .userId(1L)

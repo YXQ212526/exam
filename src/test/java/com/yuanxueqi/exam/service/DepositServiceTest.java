@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.yuanxueqi.exam.data.Account;
 import com.yuanxueqi.exam.data.Currency;
-import com.yuanxueqi.exam.data.Deposit;
-import com.yuanxueqi.exam.data.UserAddress;
 import com.yuanxueqi.exam.data.rep.DepositEntity;
 import com.yuanxueqi.exam.data.rep.enums.RespDescEnum;
 import com.yuanxueqi.exam.data.req.DepositParam;

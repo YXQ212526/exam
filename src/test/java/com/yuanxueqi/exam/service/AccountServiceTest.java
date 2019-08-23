@@ -2,6 +2,7 @@ package com.yuanxueqi.exam.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import com.yuanxueqi.exam.data.Account;
 import com.yuanxueqi.exam.data.Currency;
 import com.yuanxueqi.exam.data.UpdateBalance;
@@ -62,7 +63,7 @@ public class AccountServiceTest {
 
   @Test
   public void getAll() {
-    List<Account> list = (List<Account>) accountService.getAllAccount(1L ).getData();
+    List<Account> list = (List<Account>) accountService.getAllAccount(1L).getData();
     Assert.assertTrue(1 == list.size());
   }
 

@@ -1,7 +1,6 @@
 package com.yuanxueqi.exam.controller;
 
 
-
 import com.yuanxueqi.exam.data.Currency;
 import com.yuanxueqi.exam.data.req.OpenAccountParam;
 import com.yuanxueqi.exam.data.req.UserParam;
@@ -56,13 +55,13 @@ public class AccountControllerTest {
   @Test
   public void getAccount() {
     ResponseEntity<String> responseEntity = testRestTemplate.getForEntity(url + "/get?userId={userId}&currencyName={currencyName}",
-        String.class,1L,"btc");
+        String.class, 1L, "btc");
     Assert.assertEquals(code, responseEntity.getStatusCodeValue());
   }
 
   @Test
   public void getAllAccount() {
-    ResponseEntity<String> responseEntity = testRestTemplate.getForEntity(url + "/list?userId={userId}", String.class,1L);
+    ResponseEntity<String> responseEntity = testRestTemplate.getForEntity(url + "/list?userId={userId}", String.class, 1L);
     Assert.assertEquals(code, responseEntity.getStatusCodeValue());
   }
 

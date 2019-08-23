@@ -19,9 +19,9 @@
   <select id="selectAll" resultMap="account">
   select * from account where user_id=#{userId}
   </select>
-<update id="update" parameterType="com.yuanxueqi.exam.data.UpdateBalance">
+  <update id="update" parameterType="com.yuanxueqi.exam.data.UpdateBalance">
   update account set balance =#{amount} + balance where user_id=#{userId} and currency_name=#{currencyName}
-</update>
+ </update>
   <insert id="insert" parameterType="com.yuanxueqi.exam.data.Account">
     insert into account(user_id,address,state,currency_name,balance) values(#{userId},#{address},#{state},#{currencyName},#{balance})
   </insert>
